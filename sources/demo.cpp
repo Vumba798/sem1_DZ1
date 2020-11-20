@@ -11,8 +11,7 @@ using std::endl;
 
 
 
-int main()
-{
+int main() {
     bool mode = 0;
     bool direction = 0;
     std::string plainText = "";
@@ -54,7 +53,6 @@ int main()
                 textInt += static_cast<unsigned char>(plainText[i + j]);  //преобразуем символ в число
             }
             cipher = std::rand() % 4294967295; //генерация шифр-ключа 
-            //cout << "cipher: " << cipher << endl;
             textInt = cipher ^ textInt; //поразрядный XOR
             if (!direction) { // сдвиг в зависимости от направления
                 textInt = (textInt >> shift) | ((textInt) << (32 - shift));
@@ -91,13 +89,11 @@ int main()
                 textInt += static_cast<unsigned char>(cipherText[i + j]);
             }
             cipher = std::rand() % 4294967295; //генерация шифр-ключа 
-         //   cout << "cipher: " << cipher << endl;
             if (direction) { // сдвиг в обратную сторону 
                 textInt = (textInt >> shift) | ((textInt) << (32 - shift));
             }else{
                 textInt = (textInt << shift) | ((textInt) >> (32 - shift));
             }
-            cout << "TextInt: " << textInt << endl;
             textInt = cipher ^ textInt; //поразрядный XOR
             for (size_t j = 0; j < 4; ++j) {
                 tmpChar = static_cast<unsigned char> (textInt >> 8 * (3 - j));
