@@ -59,7 +59,6 @@ int main() {
             }else{
                 textInt = (textInt << shift) | ((textInt) >> (32 - shift));
             }
-            cout << "TextInt: " << textInt << endl;
             for (size_t j = 0; j < 4; ++j) {
                 tmpChar = static_cast<unsigned char> (textInt >> 8 * (3 - j));
                 cipherText += tmpChar;//Добавляем в зашифрованный текст символы
