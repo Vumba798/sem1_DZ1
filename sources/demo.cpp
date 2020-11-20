@@ -1,7 +1,5 @@
 #include <iostream>
-
-#include <iostream>
-
+#include <bitset>
 #include <cmath>
 #include <string>
 
@@ -16,6 +14,7 @@ int main() {
     bool direction = 0;
     std::string plainText = "";
     std::string cipherText = "";
+    std::bitset<8> byte;
     unsigned long initKey = 0;
     unsigned long cipher = 0;
     unsigned long textInt = 0;
@@ -60,8 +59,8 @@ int main() {
                 textInt = (textInt << shift) | ((textInt) >> (32 - shift));
             }
             for (size_t j = 0; j < 4; ++j) {
-                tmpChar = static_cast<unsigned char> (textInt >> 8 * (3 - j));
-                cipherText += tmpChar;//Добавляем в зашифрованный текст символы
+                byte = static_cast<unsigned char> (textInt >> 8 * (3 - j));
+                cipherText += byte.to_string();//Добавляем в зашифрованный текст символы
             }
         }
         cout << "cipherText is >> " << cipherText << " <<" << endl;
@@ -81,11 +80,12 @@ int main() {
         cout << "Please, input amount of bits in the shift: ";
         // кол-во бит сдвига
         cin >> shift;
-        for (size_t i = 0; i < cipherText.length(); i += 4) {
+        for (size_t i = 0; i < cipherText.length(); i += 32) {
             // делаем тоже самое, что и в режиме шифрования, а именно переводим буквы в int
-            for (size_t j = 0; j < 4; ++j) {
+            for (size_t j = 0; j < 32; j += 8) {
                 textInt <<= 8;
-                textInt += static_cast<unsigned char>(cipherText[i + j]);
+                std::bitset<8> tempByte(cipherText.c_str() + i + j);
+                textInt += tempByte.to_ulong();
             }
             cipher = std::rand() % 4294967295; //генерация шифр-ключа 
             if (direction) { // сдвиг в обратную сторону 
